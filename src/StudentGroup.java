@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.util.*;
 
 /**
  * A fix-sized array of students
@@ -66,21 +66,51 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public void addFirst(Student student) {
 		// Add your implementation here
+		if(student == null)
+			throw new IllegalArgumentException();
+		else{
+			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+			llstudent.addFirst(student);
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
 	public void addLast(Student student) {
 		// Add your implementation here
+		if(student == null)
+			throw new IllegalArgumentException();
+		else{
+			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+			llstudent.addLast(student);
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
 	public void add(Student student, int index) {
 		// Add your implementation here
+		if(student == null)
+			throw new IllegalArgumentException();
+		else if(index < 0 || index >= this.students.length)
+			throw new IllegalArgumentException();
+		else{
+			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+			llstudent.add(index,student);
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
 	public void remove(int index) {
 		// Add your implementation here
+		if(index < 0 || index >= students.length)
+			throw new IllegalArgumentException();
+		else{
+			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+			llstudent.remove(index);
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
