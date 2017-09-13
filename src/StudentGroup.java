@@ -113,10 +113,8 @@ public class StudentGroup implements StudentArrayOperation {
 		// Add your implementation here
 		LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
 		int firstIndex = llstudent.indexOf(student);
-		if(firstIndex == -1)
+		if(student == null)
 			throw new IllegalArgumentException("Student not exist");
-		else if(student == null)
-			throw new IllegalArgumentException();
 		else{
 			llstudent.remove(firstIndex);
 			this.students = llstudent.toArray(new Student[llstudent.size()]);
