@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.text.*;
 /**
  * A fix-sized array of students
  * array length should always be equal to the number of stored elements
@@ -213,12 +213,16 @@ public class StudentGroup implements StudentArrayOperation {
 			throw new IllegalArgumentException();
 		else{
 			for(int i=0;i<this.students.length;i++){
-				Date date1=this.students[i].getBirthDate();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date date2 = sdf.format(date1);
-				int comparison = date.compareTo(date2);
-				if(comparison == 0)
-					llstudent.add(students[i]);
+				try{
+					Date date1=this.students[i].getBirthDate();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String datestr = sdf.format(date1);
+					Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(datestr);
+					int comparison = date.compareTo(date2);
+					if(comparison == 0)
+						llstudent.add(students[i]);
+				}
+				catch(Exception e){}
 			}
 		}
 		return llstudent.toArray(new Student[llstudent.size()]);
