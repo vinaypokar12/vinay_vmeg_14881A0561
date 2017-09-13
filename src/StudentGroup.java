@@ -116,11 +116,34 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public void remove(Student student) {
 		// Add your implementation here
+		LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+		int firstIndex = llstudent.indexOf(student);
+		if(firstIndex == -1)
+			throw new IllegalArgumentException("Student not exist");
+		else if(student == null)
+			throw new IllegalArgumentException();
+		else{
+			llstudent.remove(firstIndex);
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
 	public void removeFromIndex(int index) {
 		// Add your implementation here
+		if(index < 0 || index >= students.length)
+			throw new IllegalArgumentException();
+		else{
+			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
+			for(int i=index;i<llstudent.size();i++)
+			{	
+				llstudent.remove(i);
+				
+			}
+			//for(int i=0;i<llstudent.size();i++)
+				//System.out.println("llstudent:"+llstudent.get(i).getFullName());
+			students = llstudent.toArray(new Student[llstudent.size()]);
+		}
 	}
 
 	@Override
