@@ -227,6 +227,20 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		if(firstDate == null || lastDate == null)
+			throw new IllegalArgumentException();
+		else{
+			for(int i=0;i<this.students.length;i++){
+				Date date1=this.students[i].getBirthDate();
+				int c1 = firstDate.compareTo(date1);
+				int c2 = lastDate.compareTo(date1);
+				if((c1 == -1 && c2 == 1) || c1==0 || c2==0)
+					llstudent.add(students[i]);
+			}
+		}
+		if(llstudent.size()>0)
+			return llstudent.toArray(new Student[llstudent.size()]);
 		return null;
 	}
 
