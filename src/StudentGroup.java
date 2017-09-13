@@ -265,6 +265,20 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudentsWithMaxAvgMark() {
 		// Add your implementation here
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		double avg=0;
+		for(int i=0;i<this.students.length;i++){
+			double av=this.students[i].getAvgMark();
+			if(av > avg)
+				avg=av;
+		}
+		for(int i=0;i<this.students.length;i++){
+			double av=this.students[i].getAvgMark();
+			if(av==avg)
+				llstudent.add(this.students[i]);
+		}
+		if(llstudent.size() > 0)
+			return llstudent.toArray(new Student[llstudent.size()]);
 		return null;
 	}
 
