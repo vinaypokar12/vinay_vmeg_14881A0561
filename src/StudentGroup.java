@@ -199,21 +199,14 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
-		LinkedList<Student> llstudent=new LinkedList<Student>();
 		if(date == null)
 			throw new IllegalArgumentException();
-		else{
-			for(int i=0;i<this.students.length;i++){
-				try{
-					Date date1=this.students[i].getBirthDate();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					String datestr = sdf.format(date1);
-					Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(datestr);
-					int comparison = date.compareTo(date2);
-					if(comparison == 0)
-						llstudent.add(students[i]);
-				}
-				catch(Exception e){}
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		for(Student stud:this.students)
+		{
+			if((stud.getBirthDate())==(date))
+			{
+				llstudent.add(stud);
 			}
 		}
 		return llstudent.toArray(new Student[llstudent.size()]);
@@ -222,93 +215,62 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getBetweenBirthDates(Date firstDate, Date lastDate) {
 		// Add your implementation here
-		LinkedList<Student> llstudent=new LinkedList<Student>();
-		if(firstDate == null || lastDate == null)
+		if(firstDate == null || lastDate==null)
 			throw new IllegalArgumentException();
-		else{
-			for(int i=0;i<this.students.length;i++){
-				Date date1=this.students[i].getBirthDate();
-				int c1 = firstDate.compareTo(date1);
-				int c2 = lastDate.compareTo(date1);
-				if((c1 == -1 && c2 == 1) || c1==0 || c2==0)
-					llstudent.add(students[i]);
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		for(Student stud:this.students)
+		{
+			if(stud.getBirthDate().after(firstDate) && stud.getBirthDate().before(lastDate))
+			{
+				llstudent.add(stud);
 			}
 		}
+		
 		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
-		LinkedList<Student> llstudent=new LinkedList<Student>();
 		if(date == null)
 			throw new IllegalArgumentException();
-		else{
-			Date d1 = new Date();
-			Calendar c = Calendar.getInstance();
-			c.setTime(date);
-			c.add(Calendar.DATE,days);
-			d1 = c.getTime();
-			//d1 = d1+days;
-			for(int i=0;i<this.students.length;i++){
-				Date date1=this.students[i].getBirthDate();
-				int c1 = date.compareTo(date1);
-				int c2 = date.compareTo(d1);
-				if((c2 == -1 && c1 <= -1) || c1==0 || c2==0)
-					llstudent.add(students[i]);
-			}
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		Calendar cal=getCalander(date);
+		cal.add(Calendar.DATE,days);
+		date=cal.getTime();
+		for(Student stud:this.students){
+			if(stud.getBirthDate().before(date))
+				llstudent.add(stud);
 		}
 		return llstudent.toArray(new Student[llstudent.size()]);
 	}
-
+	public Calendar getCalander(Date date)
+	{
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
 		int age=0;
 		if(indexOfStudent == 0)
 			throw new IllegalArgumentException();
-		else{
-			try{
-				Date d1=new Date();
-				Date d2=this.students[indexOfStudent].getBirthDate();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				String datestr = sdf.format(d2);
-				Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(datestr);
-				//age=d1-d2;
-				Calendar a = Calendar.getInstance();
-				a.setTime(d1);
-				Calendar b = Calendar.getInstance();
-				b.setTime(date2);
-				age = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
-				if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
-        				age--;
-				
-			}
-			catch(Exception e){}
-		}
-		return age;	
+		Date curdate=new Date();
+		return this.students[indexOfStudent].getBirthDate().getYear() - curdate.getYear();
 	}
 
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		// Add your implementation here
-		int age1;
 		LinkedList<Student> llstudent=new LinkedList<Student>();
-		for(int i=0;i<this.students.length;i++){
-			Date d1=new Date(98,1,25);
-			Date d2=this.students[i].getBirthDate();
-			Calendar a = Calendar.getInstance();
-			a.setTime(d1);
-			Calendar b = Calendar.getInstance();
-			b.setTime(d2);
-			age1 = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
-			
-			if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
-        		age1--;
-			//System.out.println("Years:  "+b.get(Calendar.YEAR)+"   "+a.get(Calendar.YEAR)+"   "+age1);
-			if(age1 == age)
-				llstudent.add(this.students[i]);
+		for(int i=0;i<this.students.length;i++)
+		{
+			if(getCurrentAgeByDate(i) == age)
+				llstudent.add(getStudent(i));
 		}
+		
+		
 		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
@@ -316,17 +278,18 @@ public class StudentGroup implements StudentArrayOperation {
 	public Student[] getStudentsWithMaxAvgMark() {
 		// Add your implementation here
 		LinkedList<Student> llstudent=new LinkedList<Student>();
-		double avg=0;
-		for(int i=0;i<this.students.length;i++){
-			double av=this.students[i].getAvgMark();
-			if(av > avg)
-				avg=av;
+		double max=0;
+		for(Student stud:this.students)
+		{
+			if(stud.getAvgMark() > max)
+				max=stud.getAvgMark();
 		}
-		for(int i=0;i<this.students.length;i++){
-			double av=this.students[i].getAvgMark();
-			if(av==avg)
-				llstudent.add(this.students[i]);
+		for(Student stud:this.students)
+		{
+			if(stud.getAvgMark() == max)
+				llstudent.add(stud);
 		}
+		
 		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
