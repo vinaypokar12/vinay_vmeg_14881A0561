@@ -259,7 +259,24 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudentsByAge(int age) {
 		// Add your implementation here
-		return null;
+		int age1;
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		for(int i=0;i<this.students.length;i++){
+			Date d1=new Date(98,1,25);
+			Date d2=this.students[i].getBirthDate();
+			Calendar a = Calendar.getInstance();
+			a.setTime(d1);
+			Calendar b = Calendar.getInstance();
+			b.setTime(d2);
+			age1 = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+			
+			if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
+        		age1--;
+			//System.out.println("Years:  "+b.get(Calendar.YEAR)+"   "+a.get(Calendar.YEAR)+"   "+age1);
+			if(age1 == age)
+				llstudent.add(this.students[i]);
+		}
+		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
