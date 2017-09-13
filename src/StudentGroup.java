@@ -26,10 +26,7 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getStudents() {
 		// Add your implementation here
-		if(this.students.length == 0)
-			return null;
-		else
-			return this.students;
+		return this.students;
 	}
 
 	@Override
@@ -44,10 +41,8 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student getStudent(int index) {
 		// Add your implementation here
-		if(index < 0 || index >= students.length)
+		if(index < 0 || index >= this.students.length)
 			throw new IllegalArgumentException();
-		else if(this.students.length == 0)
-			return null;
 		else
 			return students[index];
 	}
@@ -71,7 +66,7 @@ public class StudentGroup implements StudentArrayOperation {
 		else{
 			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
 			llstudent.addFirst(student);
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
@@ -83,7 +78,7 @@ public class StudentGroup implements StudentArrayOperation {
 		else{
 			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
 			llstudent.addLast(student);
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
@@ -97,7 +92,7 @@ public class StudentGroup implements StudentArrayOperation {
 		else{
 			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
 			llstudent.add(index,student);
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
@@ -109,7 +104,7 @@ public class StudentGroup implements StudentArrayOperation {
 		else{
 			LinkedList<Student> llstudent = new LinkedList<Student>(Arrays.asList(this.students));
 			llstudent.remove(index);
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
@@ -124,7 +119,7 @@ public class StudentGroup implements StudentArrayOperation {
 			throw new IllegalArgumentException();
 		else{
 			llstudent.remove(firstIndex);
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
@@ -140,7 +135,7 @@ public class StudentGroup implements StudentArrayOperation {
 				llstudent.remove(i);
 				
 			}
-			students = llstudent.toArray(new Student[llstudent.size()]);
+			this.students = llstudent.toArray(new Student[llstudent.size()]);
 		}
 	}
 
