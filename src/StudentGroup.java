@@ -277,9 +277,7 @@ public class StudentGroup implements StudentArrayOperation {
 			if(av==avg)
 				llstudent.add(this.students[i]);
 		}
-		if(llstudent.size() > 0)
-			return llstudent.toArray(new Student[llstudent.size()]);
-		return null;
+		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
