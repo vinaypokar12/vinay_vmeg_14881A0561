@@ -219,9 +219,7 @@ public class StudentGroup implements StudentArrayOperation {
 					llstudent.add(students[i]);
 			}
 		}
-		if(llstudent.size()>0)
-			return llstudent.toArray(new Student[llstudent.size()]);
-		return null;
+		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
@@ -239,9 +237,7 @@ public class StudentGroup implements StudentArrayOperation {
 					llstudent.add(students[i]);
 			}
 		}
-		if(llstudent.size()>0)
-			return llstudent.toArray(new Student[llstudent.size()]);
-		return null;
+		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
@@ -253,7 +249,23 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
-		return 0;
+		int age;
+		if(indexOfStudent == 0)
+			throw new IllegalArgumentException();
+		else{
+			Date d1=new Date(98,1,25);
+			Date d2=this.students[indexOfStudent].getBirthDate();
+			//age=d1-d2;
+			Calendar a = Calendar.getInstance();
+			a.setTime(d1);
+			Calendar b = Calendar.getInstance();
+			b.setTime(d2);
+			
+			age = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+			if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
+        		age--;
+		}
+		return age;
 	}
 
 	@Override
