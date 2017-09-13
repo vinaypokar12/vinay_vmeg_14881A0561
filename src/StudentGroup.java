@@ -214,7 +214,9 @@ public class StudentGroup implements StudentArrayOperation {
 		else{
 			for(int i=0;i<this.students.length;i++){
 				Date date1=this.students[i].getBirthDate();
-				int comparison = date.compareTo(date1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date date2 = sdf.format(date1);
+				int comparison = date.compareTo(date2);
 				if(comparison == 0)
 					llstudent.add(students[i]);
 			}
