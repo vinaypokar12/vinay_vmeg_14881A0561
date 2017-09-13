@@ -208,6 +208,19 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getByBirthDate(Date date) {
 		// Add your implementation here
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		if(date == null)
+			throw new IllegalArgumentException();
+		else{
+			for(int i=0;i<this.students.length;i++){
+				Date date1=this.students[i].getBirthDate();
+				int comparison = date.compareTo(date1);
+				if(comparison == 0)
+					llstudent.add(students[i]);
+			}
+		}
+		if(llstudent.size()>0)
+			return llstudent.toArray(new Student[llstudent.size()]);
 		return null;
 	}
 
