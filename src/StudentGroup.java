@@ -249,7 +249,25 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public Student[] getNearBirthDate(Date date, int days) {
 		// Add your implementation here
-		return null;
+		LinkedList<Student> llstudent=new LinkedList<Student>();
+		if(date == null)
+			throw new IllegalArgumentException();
+		else{
+			Date d1 = new Date();
+			Calendar c = Calendar.getInstance();
+			c.setTime(date);
+			c.add(Calendar.DATE,days);
+			d1 = c.getTime();
+			//d1 = d1+days;
+			for(int i=0;i<this.students.length;i++){
+				Date date1=this.students[i].getBirthDate();
+				int c1 = date.compareTo(date1);
+				int c2 = date.compareTo(d1);
+				if((c2 == -1 && c1 <= -1) || c1==0 || c2==0)
+					llstudent.add(students[i]);
+			}
+		}
+		return llstudent.toArray(new Student[llstudent.size()]);
 	}
 
 	@Override
