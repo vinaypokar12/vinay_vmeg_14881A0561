@@ -255,23 +255,29 @@ public class StudentGroup implements StudentArrayOperation {
 	@Override
 	public int getCurrentAgeByDate(int indexOfStudent) {
 		// Add your implementation here
-		int age;
+		int age=0;
 		if(indexOfStudent == 0)
 			throw new IllegalArgumentException();
 		else{
-			Date d1=new Date(98,1,25);
-			Date d2=this.students[indexOfStudent].getBirthDate();
-			//age=d1-d2;
-			Calendar a = Calendar.getInstance();
-			a.setTime(d1);
-			Calendar b = Calendar.getInstance();
-			b.setTime(d2);
-			
-			age = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
-			if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
-        		age--;
+			try{
+				Date d1=new Date();
+				Date d2=this.students[indexOfStudent].getBirthDate();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String datestr = sdf.format(d2);
+				Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(datestr);
+				//age=d1-d2;
+				Calendar a = Calendar.getInstance();
+				a.setTime(d1);
+				Calendar b = Calendar.getInstance();
+				b.setTime(date2);
+				age = b.get(Calendar.YEAR) - a.get(Calendar.YEAR);
+				if (a.get(Calendar.MONTH) > b.get(Calendar.MONTH) || (a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)))
+        				age--;
+				
+			}
+			catch(Exception e){}
 		}
-		return age;
+		return age;	
 	}
 
 	@Override
